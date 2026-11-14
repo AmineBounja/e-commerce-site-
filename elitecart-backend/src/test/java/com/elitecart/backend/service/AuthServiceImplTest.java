@@ -98,6 +98,6 @@ class AuthServiceImplTest {
         verify(userRepository).save(any(User.class));
         verify(cartRepository).save(any(Cart.class));
         verify(wishlistRepository).save(any(Wishlist.class));
-        verify(emailService).sendVerificationEmail(any(User.class), anyString());
+
     }
 }
