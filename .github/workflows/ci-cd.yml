@@ -1,3 +1,4 @@
+
 name: ShopNow CI/CD
 
 on:
@@ -8,11 +9,12 @@ on:
 
 jobs:
   backend:
-    name: Backend — Build & Test
+    name: Backend - Build & Test
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ShopNow-backend
+        working-directory: elitecart-backend
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,14 +35,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ShopNow-backend-jar
-          path: ShopNow-backend/target/ShopNow-backend.jar
+          path: elitecart-backend/target/ShopNow-backend.jar
 
   frontend:
-    name: Frontend — Build
+    name: Frontend - Build
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ShopNow-frontend
+        working-directory: elitecart-frontend
+
     steps:
       - uses: actions/checkout@v4
 
@@ -49,7 +52,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: ShopNow-frontend/package-lock.json
+          cache-dependency-path: elitecart-frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -66,13 +69,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ShopNow-frontend-dist
-          path: ShopNow-frontend/dist
+          path: elitecart-frontend/dist
 
   docker-images:
     name: Build Docker Images
     needs: [backend, frontend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
     steps:
       - uses: actions/checkout@v4
 
@@ -82,23 +86,17 @@ jobs:
       - name: Build backend image
         uses: docker/build-push-action@v5
         with:
-          context: ./ShopNow-backend
+          context: ./elitecart-backend
           push: false
-          tags: ShopNow-backend:latest
+          tags: shopnow-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Build frontend image
         uses: docker/build-push-action@v5
         with:
-          context: ./ShopNow-frontend
+          context: ./elitecart-frontend
           push: false
-          tags: ShopNow-frontend:latest
+          tags: shopnow-frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  # Deployment is intentionally left as a manual/managed step — Railway and
-  # Render both auto-deploy on push once connected to this repo (see
-  # docs/DEPLOYMENT.md). If you'd rather deploy from Actions directly, add a
-  # `deploy` job here using the `railwayapp/cli` action or Render's deploy
-  # hook URL, guarded by `if: github.ref == 'refs/heads/main'`.
