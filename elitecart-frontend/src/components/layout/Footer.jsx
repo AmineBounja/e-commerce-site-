@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
-            <span className="font-display text-lg font-bold bg-brand-gradient bg-clip-text text-transparent">EliteCart</span>
+            <span className="font-display text-lg font-bold bg-brand-gradient bg-clip-text text-transparent">ShopNow</span>
             <p className="mt-2 text-sm text-ink-faint">Premium products, shipped fast, backed by real people.</p>
           </div>
           <div>
@@ -29,12 +29,12 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-ink">Get in touch</h4>
             <p className="mt-3 flex items-center gap-2 text-sm text-ink-faint">
-              <HiOutlineMail className="h-4 w-4" /> support@elitecart.com
+              <HiOutlineMail className="h-4 w-4" /> support@ShopNow.com
             </p>
           </div>
         </div>
         <div className="mt-10 border-t border-ink/5 pt-6 text-xs text-ink-faint">
-          © {new Date().getFullYear()} EliteCart. Built as a portfolio project.
+          © {new Date().getFullYear()} ShopNow. Built as a portfolio project.
         </div>
       </div>
     </footer>

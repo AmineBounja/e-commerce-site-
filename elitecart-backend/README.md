@@ -1,8 +1,8 @@
-# EliteCart — Backend (Phase 1–4: Foundation → Auth → Catalog → Orders → Analytics)
+# ShopNow — Backend (Phase 1–4: Foundation → Auth → Catalog → Orders → Analytics)
 
 Professional e-commerce platform backend built with **Java 21 + Spring Boot 3**.
 
-This covers **Phases 1–4 of 6** of the full EliteCart build: a complete, runnable
+This covers **Phases 1–4 of 6** of the full ShopNow build: a complete, runnable
 foundation (schema, security, auth), the full Product and Category modules,
 the full shopping flow (Cart, Wishlist, Addresses, Orders, mock Payments), and
 now Product Reviews plus the Admin Dashboard/Analytics APIs — all wired end to
@@ -122,7 +122,7 @@ end, not stubs.
   (ready for a Recharts pie chart).
 - **CSV export** (`/admin/analytics/orders/export`): streams every order
   (number, date, customer email, status, total) as a downloadable
-  `elitecart-orders.csv`.
+  `ShopNow-orders.csv`.
 - Unit test for the duplicate-review guard rail.
 
 ## Tech stack (this phase)
@@ -134,8 +134,8 @@ Validation · Spring Mail · JUnit 5 · Mockito · Docker
 ## Project structure
 
 ```
-elitecart-backend/
-├── src/main/java/com/elitecart/backend/
+ShopNow-backend/
+├── src/main/java/com/ShopNow/backend/
 │   ├── config/          # SecurityConfig, OpenApiConfig, JpaAuditingConfig, WebConfig, DataSeeder
 │   ├── controller/       # AuthController, ProductController, CategoryController,
 │   │                     # AdminProductController, AdminCategoryController, CartController,
@@ -167,7 +167,7 @@ elitecart-backend/
 │   │                     # Wishlist, Address, Order, Payment, Review, Analytics)
 │   │   └── impl/         # Implementations
 │   ├── util/             # SlugUtil
-│   └── EliteCartBackendApplication.java
+│   └── ShopNowBackendApplication.java
 ├── src/test/java/...     # AuthServiceImplTest, ProductServiceImplTest, CartServiceImplTest,
 │                         # ReviewServiceImplTest
 ├── pom.xml
@@ -183,7 +183,7 @@ elitecart-backend/
 
 ```bash
 # 1. Create a MySQL database (or let ddl-auto create it for you)
-mysql -u root -p -e "CREATE DATABASE elitecart_db;"
+mysql -u root -p -e "CREATE DATABASE ShopNow_db;"
 
 # 2. Copy env template and fill in real values
 cp .env.example .env
@@ -197,7 +197,7 @@ Swagger UI: `http://localhost:8080/api/swagger-ui.html`
 
 ### Option B — Docker
 
-From the **repository root** (one level above `elitecart-backend/`):
+From the **repository root** (one level above `ShopNow-backend/`):
 
 ```bash
 docker-compose up --build
@@ -210,7 +210,7 @@ Phase 5 — for now you can comment it out if you only want the backend.)
 ### Default admin login (auto-seeded)
 
 ```
-email:    admin@elitecart.com
+email:    admin@ShopNow.com
 password: Admin@123
 ```
 

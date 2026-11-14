@@ -12,11 +12,10 @@
     </parent>
 
     <groupId>com.elitecart</groupId>
-    <artifactId>elitecart-backend</artifactId>
-    <version>1.0.0</version>
-    <name>elitecart-backend</name>
-    <description>EliteCart - Professional E-Commerce Platform (Backend)</description>
-
+<artifactId>elitecart-backend</artifactId>
+<version>1.0.0</version>
+<name>ShopNow</name>
+<description>ShopNow - Professional E-Commerce Platform (Backend)</description>
     <properties>
         <java.version>21</java.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
@@ -118,7 +117,7 @@
     </dependencies>
 
     <build>
-        <finalName>elitecart-backend</finalName>
+        <finalName>ShopNow-backend</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

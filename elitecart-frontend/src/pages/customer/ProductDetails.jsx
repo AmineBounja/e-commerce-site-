@@ -64,7 +64,7 @@ export default function ProductDetails() {
   }
 
   const hasDiscount = product.discountPrice && product.discountPrice < product.price
-  const images = product.images?.length ? product.images : [{ imageUrl: 'https://placehold.co/600x600?text=EliteCart' }]
+  const images = product.images?.length ? product.images : [{ imageUrl: 'https://placehold.co/600x600?text=ShopNow' }]
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">

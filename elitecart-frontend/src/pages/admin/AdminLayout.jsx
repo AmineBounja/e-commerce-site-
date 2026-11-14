@@ -21,7 +21,7 @@ export default function AdminLayout() {
       <aside className="hidden w-64 shrink-0 border-r border-ink/5 bg-white lg:block">
         <div className="p-6">
           <Link to="/" className="font-display text-xl font-bold bg-brand-gradient bg-clip-text text-transparent">
-            EliteCart
+            ShopNow
           </Link>
           <p className="mt-0.5 text-xs text-ink-faint">Admin console</p>
         </div>
@@ -49,7 +49,7 @@ export default function AdminLayout() {
 
       <div className="flex-1">
         <header className="flex h-16 items-center justify-between border-b border-ink/5 bg-white px-6 lg:hidden">
-          <span className="font-display font-bold bg-brand-gradient bg-clip-text text-transparent">EliteCart Admin</span>
+          <span className="font-display font-bold bg-brand-gradient bg-clip-text text-transparent">ShopNow Admin</span>
         </header>
         <div className="p-6 lg:p-10">
           <div className="mb-6 flex items-center justify-between lg:hidden">

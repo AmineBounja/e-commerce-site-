@@ -40,7 +40,7 @@ export default function AdminDashboard() {
       const url = window.URL.createObjectURL(new Blob([res.data], { type: 'text/csv' }))
       const link = document.createElement('a')
       link.href = url
-      link.setAttribute('download', 'elitecart-orders.csv')
+      link.setAttribute('download', 'ShopNow-orders.csv')
       document.body.appendChild(link)
       link.click()
       link.remove()

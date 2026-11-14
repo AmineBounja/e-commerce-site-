@@ -13,7 +13,7 @@ export default function AuthLayout({ title, subtitle, children }) {
           className="w-full max-w-md rounded-3xl border border-ink/5 bg-white/80 p-8 shadow-glass backdrop-blur-xl"
         >
           <Link to="/" className="font-display text-xl font-bold bg-brand-gradient bg-clip-text text-transparent">
-            EliteCart
+            ShopNow
           </Link>
           <h1 className="mt-6 font-display text-2xl font-bold text-ink">{title}</h1>
           {subtitle && <p className="mt-1 text-sm text-ink-faint">{subtitle}</p>}

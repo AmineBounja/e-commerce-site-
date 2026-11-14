@@ -20,7 +20,7 @@ export default function Register() {
   }
 
   return (
-    <AuthLayout title="Create your account" subtitle="Join EliteCart and start shopping">
+    <AuthLayout title="Create your account" subtitle="Join ShopNow and start shopping">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div>

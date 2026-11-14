@@ -1,4 +1,4 @@
-# EliteCart — System Architecture
+# ShopNow — System Architecture
 
 ```mermaid
 flowchart TB
@@ -6,11 +6,11 @@ flowchart TB
         Browser["Browser<br/>React 19 SPA (Vite)"]
     end
 
-    subgraph Frontend["elitecart-frontend"]
+    subgraph Frontend["ShopNow-frontend"]
         Nginx["Nginx<br/>(serves static build,<br/>SPA fallback routing)"]
     end
 
-    subgraph Backend["elitecart-backend (Spring Boot 3)"]
+    subgraph Backend["ShopNow-backend (Spring Boot 3)"]
         direction TB
         Filter["JwtAuthenticationFilter"]
         Controllers["REST Controllers<br/>(Auth, Product, Category, Cart,<br/>Wishlist, Order, Review, Admin*)"]
@@ -20,7 +20,7 @@ flowchart TB
     end
 
     subgraph Data["Data Layer"]
-        MySQL[("MySQL 8<br/>elitecart_db")]
+        MySQL[("MySQL 8<br/>ShopNow_db")]
     end
 
     subgraph External["External"]

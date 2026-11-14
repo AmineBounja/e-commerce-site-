@@ -1,4 +1,4 @@
-# EliteCart — Frontend (Phases 5–6: Storefront + Admin Console)
+# ShopNow — Frontend (Phases 5–6: Storefront + Admin Console)
 
 The full frontend, built with **React 19 + Vite + Tailwind CSS** — the
 customer storefront (Phase 5) plus the admin console (Phase 6).
@@ -99,7 +99,7 @@ pushed further toward production).
 ## Project structure
 
 ```
-elitecart-frontend/
+ShopNow-frontend/
 ├── src/
 │   ├── api/              # axiosClient (with refresh interceptor) + one file per resource
 │   ├── app/store.js       # Redux Toolkit store
@@ -147,4 +147,4 @@ frontend on port `5173` via nginx, alongside the backend and MySQL.
 - `../docs/ARCHITECTURE.md` — system architecture + request-flow diagrams
 - `../docs/ER-DIAGRAM.md` — full database schema
 - `../docs/DEPLOYMENT.md` — Railway & Render deployment steps
-- `../postman/EliteCart.postman_collection.json` — every API endpoint, ready to import
+- `../postman/ShopNow.postman_collection.json` — every API endpoint, ready to import

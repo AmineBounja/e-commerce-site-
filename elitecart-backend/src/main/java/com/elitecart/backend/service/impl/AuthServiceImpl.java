@@ -1,3 +1,4 @@
+
 package com.elitecart.backend.service.impl;
 
 import com.elitecart.backend.dto.auth.AuthResponse;
@@ -38,10 +39,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.UUID;
 
-/**
- * Core authentication business logic: registration, email verification,
- * login, token refresh, logout, and the forgot/reset/change password flows.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -60,17 +57,22 @@ public class AuthServiceImpl implements AuthService {
     @Value("${app.frontend.base-url}")
     private String frontendBaseUrl;
 
+    // REGISTER
+    // Development mode: users can log in immediately without email verification.
     @Override
     @Transactional
     public void register(RegisterRequest request) {
+
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new DuplicateResourceException("An account with this email already exists");
+            throw new DuplicateResourceException(
+                    "An account with this email already exists"
+            );
         }
 
         Role customerRole = roleRepository.findByName(RoleName.ROLE_CUSTOMER)
-                .orElseThrow(() -> new ResourceNotFoundException("Default role not configured"));
-
-        String verificationToken = UUID.randomUUID().toString();
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Default role not configured"
+                ));
 
         User user = User.builder()
                 .firstName(request.getFirstName())
@@ -78,32 +80,33 @@ public class AuthServiceImpl implements AuthService {
                 .email(request.getEmail().toLowerCase())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
-                .enabled(false)
+                .enabled(true)
                 .roles(new HashSet<>(java.util.Set.of(customerRole)))
-                .emailVerificationToken(verificationToken)
-                .emailVerificationTokenExpiry(LocalDateTime.now().plusHours(24))
                 .build();
 
         User savedUser = userRepository.save(user);
 
-        // Every new customer gets an empty cart and wishlist ready to use
+        // Create an empty cart and wishlist for the new customer.
         cartRepository.save(Cart.builder().user(savedUser).build());
         wishlistRepository.save(Wishlist.builder().user(savedUser).build());
 
-        String verificationLink = frontendBaseUrl + "/verify-email?token=" + verificationToken;
-        emailService.sendVerificationEmail(savedUser, verificationLink);
-
-        log.info("New user registered: {}", savedUser.getEmail());
+        log.info("New user registered and enabled: {}", savedUser.getEmail());
     }
 
+    // EMAIL VERIFICATION
     @Override
     @Transactional
     public void verifyEmail(String token) {
+
         User user = userRepository.findByEmailVerificationToken(token)
-                .orElseThrow(() -> new InvalidTokenException("Invalid or expired verification token"));
+                .orElseThrow(() -> new InvalidTokenException(
+                        "Invalid or expired verification token"
+                ));
 
         if (user.getEmailVerificationTokenExpiry().isBefore(LocalDateTime.now())) {
-            throw new InvalidTokenException("Verification token has expired. Please request a new one.");
+            throw new InvalidTokenException(
+                    "Verification token has expired. Please request a new one."
+            );
         }
 
         user.setEnabled(true);
@@ -114,20 +117,29 @@ public class AuthServiceImpl implements AuthService {
         log.info("Email verified for user: {}", user.getEmail());
     }
 
+    // LOGIN
     @Override
     @Transactional
     public AuthResponse login(LoginRequest request) {
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail().toLowerCase(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail().toLowerCase(),
+                        request.getPassword()
+                )
         );
 
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        UserPrincipal userPrincipal =
+                (UserPrincipal) authentication.getPrincipal();
 
         User user = userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         String accessToken = jwtUtil.generateAccessToken(userPrincipal);
-        String refreshToken = jwtUtil.generateRefreshToken(userPrincipal, request.isRememberMe());
+        String refreshToken = jwtUtil.generateRefreshToken(
+                userPrincipal,
+                request.isRememberMe()
+        );
 
         user.setRefreshToken(refreshToken);
         user.setLastLogin(LocalDateTime.now());
@@ -136,17 +148,22 @@ public class AuthServiceImpl implements AuthService {
         return buildAuthResponse(accessToken, refreshToken, user);
     }
 
+    // REFRESH TOKEN
     @Override
     @Transactional
     public AuthResponse refreshToken(String refreshToken) {
+
         if (!jwtUtil.validateToken(refreshToken)) {
             throw new InvalidTokenException("Invalid or expired refresh token");
         }
 
         User user = userRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> new InvalidTokenException("Refresh token not recognized. Please log in again."));
+                .orElseThrow(() -> new InvalidTokenException(
+                        "Refresh token not recognized. Please log in again."
+                ));
 
         UserPrincipal userPrincipal = UserPrincipal.create(user);
+
         String newAccessToken = jwtUtil.generateAccessToken(userPrincipal);
         String newRefreshToken = jwtUtil.generateRefreshToken(userPrincipal, false);
 
@@ -156,54 +173,78 @@ public class AuthServiceImpl implements AuthService {
         return buildAuthResponse(newAccessToken, newRefreshToken, user);
     }
 
+    // LOGOUT
     @Override
     @Transactional
     public void logout(Long userId) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
         user.setRefreshToken(null);
         userRepository.save(user);
     }
 
+    // FORGOT PASSWORD
     @Override
     @Transactional
     public void forgotPassword(ForgotPasswordRequest request) {
-        userRepository.findByEmail(request.getEmail().toLowerCase()).ifPresent(user -> {
-            String resetToken = UUID.randomUUID().toString();
-            user.setResetPasswordToken(resetToken);
-            user.setResetPasswordTokenExpiry(LocalDateTime.now().plusMinutes(30));
-            userRepository.save(user);
 
-            String resetLink = frontendBaseUrl + "/reset-password?token=" + resetToken;
-            emailService.sendForgotPasswordEmail(user, resetLink);
-        });
-        // Always behave the same way whether or not the email exists, to avoid leaking account existence
+        userRepository.findByEmail(request.getEmail().toLowerCase())
+                .ifPresent(user -> {
+
+                    String resetToken = UUID.randomUUID().toString();
+
+                    user.setResetPasswordToken(resetToken);
+                    user.setResetPasswordTokenExpiry(
+                            LocalDateTime.now().plusMinutes(30)
+                    );
+
+                    userRepository.save(user);
+
+                    String resetLink = frontendBaseUrl
+                            + "/reset-password?token=" + resetToken;
+
+                    emailService.sendForgotPasswordEmail(user, resetLink);
+                });
     }
 
+    // RESET PASSWORD
     @Override
     @Transactional
     public void resetPassword(ResetPasswordRequest request) {
+
         User user = userRepository.findByResetPasswordToken(request.getToken())
-                .orElseThrow(() -> new InvalidTokenException("Invalid or expired reset token"));
+                .orElseThrow(() -> new InvalidTokenException(
+                        "Invalid or expired reset token"
+                ));
 
         if (user.getResetPasswordTokenExpiry().isBefore(LocalDateTime.now())) {
-            throw new InvalidTokenException("Reset token has expired. Please request a new one.");
+            throw new InvalidTokenException(
+                    "Reset token has expired. Please request a new one."
+            );
         }
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         user.setResetPasswordToken(null);
         user.setResetPasswordTokenExpiry(null);
-        user.setRefreshToken(null); // force re-login on all devices after a password reset
+        user.setRefreshToken(null);
+
         userRepository.save(user);
     }
 
+    // CHANGE PASSWORD
     @Override
     @Transactional
     public void changePassword(Long userId, ChangePasswordRequest request) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(
+                request.getCurrentPassword(),
+                user.getPassword()
+        )) {
             throw new BadRequestException("Current password is incorrect");
         }
 
@@ -211,7 +252,13 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
     }
 
-    private AuthResponse buildAuthResponse(String accessToken, String refreshToken, User user) {
+    // BUILD AUTH RESPONSE
+    private AuthResponse buildAuthResponse(
+            String accessToken,
+            String refreshToken,
+            User user
+    ) {
+
         return AuthResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

@@ -69,7 +69,7 @@ export default function Home() {
               <span className="bg-brand-gradient bg-clip-text text-transparent">Ship fast.</span>
             </h1>
             <p className="mt-5 max-w-lg text-lg text-ink-soft">
-              EliteCart brings together considered products, honest pricing, and a checkout
+              ShopNow brings together considered products, honest pricing, and a checkout
               that gets out of your way.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">

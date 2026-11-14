@@ -9,7 +9,7 @@ import { addToWishlist } from '../../features/wishlist/wishlistSlice.js'
 export default function ProductCard({ product }) {
   const dispatch = useDispatch()
   const hasDiscount = product.discountPrice && product.discountPrice < product.price
-  const imageUrl = product.images?.[0]?.imageUrl || 'https://placehold.co/400x400?text=EliteCart'
+  const imageUrl = product.images?.[0]?.imageUrl || 'https://placehold.co/400x400?text=ShopNow'
 
   const handleAddToCart = (e) => {
     e.preventDefault()

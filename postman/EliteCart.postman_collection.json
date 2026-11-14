@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "EliteCart API",
-    "description": "Full API collection for EliteCart — a Spring Boot 3 e-commerce backend. Set {{baseUrl}} and run Auth > Login first to auto-populate {{accessToken}}.",
+    "name": "ShopNow API",
+    "description": "Full API collection for ShopNow — a Spring Boot 3 e-commerce backend. Set {{baseUrl}} and run Auth > Login first to auto-populate {{accessToken}}.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -52,7 +52,7 @@
             "url": "{{baseUrl}}/auth/login",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@elitecart.com\",\n  \"password\": \"Admin@123\",\n  \"rememberMe\": true\n}"
+              "raw": "{\n  \"email\": \"admin@ShopNow.com\",\n  \"password\": \"Admin@123\",\n  \"rememberMe\": true\n}"
             }
           }
         },

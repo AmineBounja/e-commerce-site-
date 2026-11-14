@@ -10,7 +10,7 @@ RUN mvn clean package -DskipTests -B
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring
-COPY --from=build /app/target/elitecart-backend.jar app.jar
+COPY --from=build /app/target/ShopNow-backend.jar app.jar
 RUN chown spring:spring app.jar
 USER spring
 EXPOSE 8080

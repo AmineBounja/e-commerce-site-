@@ -38,7 +38,7 @@ export default function Wishlist() {
         {wishlist.items.map((item) => (
           <div key={item.id} className="card flex gap-4 p-4">
             <img
-              src={item.productImageUrl || 'https://placehold.co/120x120?text=EliteCart'}
+              src={item.productImageUrl || 'https://placehold.co/120x120?text=ShopNow'}
               alt={item.productName}
               className="h-20 w-20 rounded-xl object-cover"
             />

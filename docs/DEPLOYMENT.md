@@ -1,4 +1,4 @@
-# EliteCart — Deployment Guide
+# ShopNow — Deployment Guide
 
 Two deployment paths are documented here: **Railway** (simplest — one
 platform for everything) and **Render** (separate services, generous free
@@ -13,14 +13,14 @@ project, each auto-deploying from your GitHub repo on push.
 
 ### 1. Create the project
 1. Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub repo** → select this repo.
-2. Railway will detect multiple services; point it at `elitecart-backend` first.
+2. Railway will detect multiple services; point it at `ShopNow-backend` first.
 
 ### 2. Add MySQL
 - In the project, click **+ New** → **Database** → **MySQL**.
 - Railway auto-generates `MYSQL_URL`, `MYSQLHOST`, `MYSQLPASSWORD`, etc. — note these for step 3.
 
 ### 3. Configure the backend service
-- Root directory: `elitecart-backend`
+- Root directory: `ShopNow-backend`
 - Railway auto-detects the `Dockerfile` and builds from it.
 - Set environment variables (Settings → Variables):
 
@@ -38,7 +38,7 @@ project, each auto-deploying from your GitHub repo on push.
 - Railway assigns a public URL automatically (Settings → Networking → Generate Domain).
 
 ### 4. Configure the frontend service
-- **+ New** → **GitHub repo** (same repo) → root directory: `elitecart-frontend`.
+- **+ New** → **GitHub repo** (same repo) → root directory: `ShopNow-frontend`.
 - Build arg / env var: `VITE_API_BASE_URL=https://<your-backend-domain>/api`
 - Generate a public domain here too.
 - Go back to the backend service and set `FRONTEND_BASE_URL` /
@@ -60,13 +60,13 @@ MySQL host.
 
 ### 1. Backend — Web Service
 1. **New** → **Web Service** → connect this repo.
-2. Root directory: `elitecart-backend`. Environment: **Docker**.
+2. Root directory: `ShopNow-backend`. Environment: **Docker**.
 3. Set the same environment variables as the Railway table above, pointing
    `DB_URL`/`DB_USERNAME`/`DB_PASSWORD` at your external MySQL host.
 4. Render builds the `Dockerfile` and exposes it on a `*.onrender.com` URL.
 
 ### 2. Frontend — Static Site
-1. **New** → **Static Site** → same repo, root directory `elitecart-frontend`.
+1. **New** → **Static Site** → same repo, root directory `ShopNow-frontend`.
 2. Build command: `npm install && npm run build`
 3. Publish directory: `dist`
 4. Environment variable: `VITE_API_BASE_URL=https://<backend>.onrender.com/api`
@@ -80,7 +80,7 @@ Back on the backend service, set `FRONTEND_BASE_URL` and
 
 ## Environment variables reference
 
-See `elitecart-backend/.env.example` and `elitecart-frontend/.env.example`
+See `ShopNow-backend/.env.example` and `ShopNow-frontend/.env.example`
 for the full list with defaults. The ones that **must** change before any
 real deployment:
 

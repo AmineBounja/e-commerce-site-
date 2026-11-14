@@ -1,6 +1,6 @@
-# EliteCart — Entity-Relationship Diagram
+# ShopNow — Entity-Relationship Diagram
 
-This reflects the 15 JPA entities in `elitecart-backend`. Rendered
+This reflects the 15 JPA entities in `ShopNow-backend`. Rendered
 automatically by GitHub/GitLab (Mermaid support) — paste into
 [mermaid.live](https://mermaid.live) if your viewer doesn't render it.
 

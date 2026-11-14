@@ -1,4 +1,4 @@
-# EliteCart
+# ShopNow
 
 A complete, portfolio-ready, full-stack e-commerce platform — Spring Boot 3
 backend, React 19 storefront + admin console, Docker, CI/CD, and full API
@@ -40,15 +40,15 @@ Hook Form, Framer Motion, Recharts, React Icons, Tailwind CSS
 ## Folder structure
 
 ```
-elitecart/
-├── elitecart-backend/       # Spring Boot API (see its own README for full detail)
-├── elitecart-frontend/      # React storefront + admin console (see its own README)
+ShopNow/
+├── ShopNow-backend/       # Spring Boot API (see its own README for full detail)
+├── ShopNow-frontend/      # React storefront + admin console (see its own README)
 ├── docs/
 │   ├── ER-DIAGRAM.md         # Full entity-relationship diagram (Mermaid)
 │   ├── ARCHITECTURE.md       # System architecture + request-flow sequence diagrams
 │   └── DEPLOYMENT.md         # Step-by-step Railway & Render deployment guides
 ├── postman/
-│   └── EliteCart.postman_collection.json   # Every endpoint, ready to import
+│   └── ShopNow.postman_collection.json   # Every endpoint, ready to import
 ├── .github/workflows/ci-cd.yml              # Build + test both apps on every push
 ├── docker-compose.yml                        # MySQL + backend + frontend, one command
 ├── LICENSE
